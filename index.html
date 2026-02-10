@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Abdullatif Abdelhady Portfolio - Full Stack Web Developer & AI Specialist">
+    <title>Abdullatif Abdelhady | Full Stack Web Developer</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- 1. CSS Variables & Reset --- */
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-color: #38bdf8;
+            --border-color: #334155;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-theme="light"] {
+            --bg-color: #ffffff;
+            --card-bg: #f3f4f6;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --accent-color: #0284c7;
+            --border-color: #e2e8f0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            transition: var(--transition);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        ul { list-style: none; }
+
+        /* --- 2. Header --- */
+        header {
+            position: fixed; top: 0; width: 100%; padding: 20px 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(12px);
+            z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        [data-theme="light"] header { background: rgba(255, 255, 255, 0.85); border-bottom: 1px solid rgba(0,0,0,0.05); }
+
+        .logo { font-size: 1.5rem; font-weight: 900; color: var(--accent-color); letter-spacing: 1px; }
+        .nav-actions { display: flex; align-items: center; gap: 20px; }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { font-weight: 500; font-size: 0.95rem; position: relative; }
+        .nav-links a::after {
+            content: ''; position: absolute; width: 0; height: 2px; bottom: -5px;
+            background-color: var(--accent-color); transition: var(--transition);
+        }
+        html[dir="ltr"] .nav-links a::after { left: 0; }
+        html[dir="rtl"] .nav-links a::after { right: 0; }
+        .nav-links a:hover::after { width: 100%; }
+
+        .icon-btn {
+            cursor: pointer; padding: 8px 12px; border-radius: 20px;
+            background: transparent; border: 1px solid var(--border-color);
+            color: var(--text-primary); display: flex; align-items: center; justify-content: center;
+            font-family: inherit; font-weight: bold; font-size: 0.9rem; transition: var(--transition);
+        }
+        .icon-btn:hover { background: var(--card-bg); border-color: var(--accent-color); }
+
+        /* --- 3. Hero Section --- */
+        .hero {
+            min-height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            padding: 120px 20px 100px; position: relative;
+        }
+        .profile-photo {
+            width: 180px; height: 180px; border-radius: 50%; object-fit: cover;
+            border: 4px solid var(--accent-color); box-shadow: 0 0 30px rgba(56, 189, 248, 0.3);
+            margin-bottom: 30px; transition: transform 0.3s ease;
+        }
+        .profile-photo:hover { transform: scale(1.05); box-shadow: 0 0 50px rgba(56, 189, 248, 0.5); }
+        .hero-intro { color: var(--accent-color); font-weight: bold; letter-spacing: 2px; margin-bottom: 15px; text-transform: uppercase; }
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 4rem); font-weight: 900; margin-bottom: 25px;
+            background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent-color));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            line-height: 1.3; max-width: 900px;
+        }
+        .hero p { font-size: 1.15rem; color: var(--text-secondary); max-width: 700px; margin-bottom: 40px; }
+        .btn {
+            padding: 15px 40px; background-color: var(--accent-color); color: #fff;
+            border-radius: 50px; font-weight: 700; font-size: 1.1rem;
+            box-shadow: 0 10px 30px -10px var(--accent-color); display: inline-block;
+        }
+        .btn:hover { transform: translateY(-5px); box-shadow: 0 20px 40px -10px var(--accent-color); }
+
+        /* --- CERTIFICATE BUTTON --- */
+        .cert-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            margin-bottom: 40px; padding: 8px 20px;
+            border: 1px solid var(--border-color); border-radius: 30px;
+            background: rgba(255, 255, 255, 0.05); color: var(--text-secondary);
+            font-size: 0.9rem; transition: var(--transition);
+        }
+        .cert-btn:hover {
+            border-color: var(--accent-color); color: var(--accent-color);
+            background: rgba(56, 189, 248, 0.1);
+        }
+        .cert-btn i { color: var(--accent-color); }
+
+        /* --- TECH STACK MARQUEE --- */
+        .tech-marquee {
+            width: 100%; max-width: 800px; overflow: hidden;
+            margin-bottom: 40px; position: relative;
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+        .marquee-track {
+            display: flex; gap: 40px; width: max-content;
+            animation: scroll 20s linear infinite;
+        }
+        .marquee-track:hover { animation-play-state: paused; }
+        .tech-icon {
+            display: flex; align-items: center; gap: 10px;
+            font-size: 1.1rem; font-weight: bold; color: var(--text-secondary);
+            white-space: nowrap;
+        }
+        .tech-icon i { font-size: 1.5rem; color: var(--accent-color); transition: transform 0.3s; }
+        .tech-icon:hover i { transform: scale(1.2); }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* --- 4. Projects Section --- */
+        .projects-container { padding: 100px 5%; }
+        .section-title { font-size: 2.5rem; font-weight: 900; margin-bottom: 80px; text-align: center; }
+
+        .project-card {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+            align-items: center; margin-bottom: 150px; opacity: 0;
+            transform: translateY(50px); transition: all 0.8s ease-out;
+        }
+        .project-card.visible { opacity: 1; transform: translateY(0); }
+
+        .project-card:nth-child(even) .project-content { order: 1; }
+        .project-card:nth-child(even) .project-image-wrapper { order: 2; }
+        .project-card:nth-child(odd) .project-content { order: 2; }
+        .project-card:nth-child(odd) .project-image-wrapper { order: 1; }
+
+        .project-image-wrapper {
+            position: relative; border-radius: 20px; overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3); border: 1px solid var(--border-color);
+            height: 400px;
+        }
+
+        /* --- SLIDER & LIGHTBOX --- */
+        .slider-container { position: relative; width: 100%; height: 100%; }
+        .slider-track { width: 100%; height: 100%; position: relative; }
+        .slide {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; opacity: 0; transition: opacity 0.5s ease-in-out;
+            cursor: zoom-in;
+        }
+        .slide.active { opacity: 1; z-index: 1; }
+        .slider-btn {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5); color: white; border: none;
+            width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
+            z-index: 10; display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; transition: background 0.3s;
+        }
+        .slider-btn:hover { background: var(--accent-color); }
+        .prev-btn { left: 15px; } .next-btn { right: 15px; }
+
+        .lightbox {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.95); z-index: 2000;
+            display: none; justify-content: center; align-items: center;
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        .lightbox.open { display: flex; opacity: 1; }
+        .lightbox-img {
+            max-width: 90%; max-height: 90%; border-radius: 8px;
+            box-shadow: 0 0 50px rgba(56, 189, 248, 0.2); object-fit: contain;
+        }
+        .close-lightbox {
+            position: absolute; top: 30px; right: 30px;
+            color: white; font-size: 3rem; cursor: pointer; z-index: 2001;
+        }
+
+        /* --- Content Styles --- */
+        .project-content h3 { font-size: 2rem; margin-bottom: 15px; color: var(--accent-color); }
+        .project-content p { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 30px; line-height: 1.8; }
+        .tech-stack { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
+        .tech-item {
+            font-size: 0.9rem; padding: 5px 15px; border-radius: 20px;
+            background: rgba(56, 189, 248, 0.1); color: var(--accent-color);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+        }
+        .project-link {
+            display: inline-flex; align-items: center; gap: 10px; font-weight: 700;
+            color: var(--text-primary); border-bottom: 1px solid var(--accent-color);
+            padding-bottom: 5px; margin-right: 15px;
+        }
+        html[dir="rtl"] .project-link i { transform: scaleX(-1); }
+
+        /* --- FOOTER & CONTACT --- */
+        footer {
+            padding: 60px 20px; text-align: center; border-top: 1px solid var(--border-color);
+            margin-top: 50px; color: var(--text-secondary);
+        }
+        .social-container {
+            display: flex; justify-content: center; gap: 20px; margin-top: 30px;
+        }
+        .social-btn {
+            width: 55px; height: 55px; border-radius: 50%;
+            border: 2px solid var(--border-color); color: var(--text-secondary);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; transition: all 0.3s ease;
+            background: var(--card-bg);
+        }
+        .social-btn:hover {
+            border-color: var(--accent-color); color: white;
+            background: var(--accent-color); transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(56, 189, 248, 0.4);
+        }
+
+        @media (max-width: 900px) {
+            .header { padding: 15px 20px; } .nav-links { display: none; }
+            .project-card { grid-template-columns: 1fr; gap: 30px; margin-bottom: 100px; }
+            .project-card:nth-child(even) .project-content,
+            .project-card:nth-child(even) .project-image-wrapper,
+            .project-card:nth-child(odd) .project-content,
+            .project-card:nth-child(odd) .project-image-wrapper { order: initial; }
+            .hero h1 { font-size: 2.5rem; } .project-image-wrapper { height: 250px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <span class="close-lightbox">&times;</span>
+        <img id="lightbox-img" class="lightbox-img" src="" alt="Full Screen">
+    </div>
+
+    <header>
+        <div class="logo">JEDOO</div>
+        <div class="nav-actions">
+            <nav class="nav-links">
+                <a href="#projects" data-i18n="nav_projects">Projects</a>
+                <a href="#about" data-i18n="nav_about">About</a> 
+                <a href="#contact" data-i18n="nav_contact">Contact</a>
+            </nav>
+            <button class="icon-btn" id="lang-btn">AR</button>
+            <button class="icon-btn" id="theme-btn" aria-label="Toggle Theme">🌙</button>
+        </div>
+    </header>
+
+    <section class="hero" id="about">
+        <img src="images/me.jpeg" alt="Abdullatif Abdelhady" class="profile-photo">
+        <p class="hero-intro" data-i18n="hero_intro">Hello, I'm Abdullatif</p>
+        <h1 data-i18n="hero_title">Web & Mobile App Developer, Designer & AI Specialist</h1>
+        
+        <a href="images/certificate.jpeg" target="_blank" class="cert-btn" onclick="event.preventDefault(); openLightbox(this.href);">
+            <i class="fas fa-certificate"></i> <span data-i18n="my_certificate">Certified Web Developer</span>
+        </a>
+
+        <div class="tech-marquee">
+            <div class="marquee-track">
+                <div class="tech-icon"><i class="fab fa-react"></i> React</div>
+                <div class="tech-icon"><i class="fab fa-node-js"></i> Node.js</div>
+                <div class="tech-icon"><i class="fab fa-python"></i> Python</div>
+                <div class="tech-icon"><i class="fas fa-database"></i> MySQL</div>
+                <div class="tech-icon"><i class="fab fa-php"></i> PHP</div>
+                <div class="tech-icon"><i class="fab fa-js"></i> JavaScript</div>
+                <div class="tech-icon"><i class="fab fa-html5"></i> HTML5</div>
+                <div class="tech-icon"><i class="fab fa-css3-alt"></i> CSS3</div>
+                <div class="tech-icon"><i class="fas fa-brain"></i> AI Models</div>
+                
+                <div class="tech-icon"><i class="fab fa-react"></i> React</div>
+                <div class="tech-icon"><i class="fab fa-node-js"></i> Node.js</div>
+                <div class="tech-icon"><i class="fab fa-python"></i> Python</div>
+                <div class="tech-icon"><i class="fas fa-database"></i> MySQL</div>
+                <div class="tech-icon"><i class="fab fa-php"></i> PHP</div>
+                <div class="tech-icon"><i class="fab fa-js"></i> JavaScript</div>
+                <div class="tech-icon"><i class="fab fa-html5"></i> HTML5</div>
+                <div class="tech-icon"><i class="fab fa-css3-alt"></i> CSS3</div>
+                <div class="tech-icon"><i class="fas fa-brain"></i> AI Models</div>
+            </div>
+        </div>
+
+        <p data-i18n="hero_desc_1">I create all types of websites and applications with stunning designs and precision, tailored exactly to your needs.</p>
+        <p data-i18n="hero_desc_2" style="font-size: 1rem; opacity: 0.8; margin-top: -20px;">Expert in PowerPoint presentations, Word documents, graduation projects, and interactive Office reports.</p>
+        <a href="#projects" class="btn" data-i18n="hero_cta">View My Work</a>
+    </section>
+
+    <section id="projects" class="projects-container">
+        <h2 class="section-title" data-i18n="projects_title">Latest Projects</h2>
+
+        <article class="project-card">
+            <div class="project-image-wrapper slider-container" id="slider-1">
+                <div class="slider-track">
+                    <img src="images/bcz1.png" alt="Zool Main" class="slide active" onclick="openLightbox(this.src)">
+                    <img src="images/bcz2.png" alt="Zool Menu" class="slide" onclick="openLightbox(this.src)">
+                    <img src="images/bcz3.png" alt="Zool Admin" class="slide" onclick="openLightbox(this.src)">
+                    <img src="images/bcz4.png" alt="Zool Admin" class="slide" onclick="openLightbox(this.src)">
+                    <img src="images/bcz5.png" alt="Zool Admin" class="slide" onclick="openLightbox(this.src)">
+                </div>
+                <button class="slider-btn prev-btn" onclick="changeSlide('slider-1', -1)">❮</button>
+                <button class="slider-btn next-btn" onclick="changeSlide('slider-1', 1)">❯</button>
+            </div>
+            <div class="project-content">
+                <h3 data-i18n="proj1_title">Better Call Zool</h3>
+                <p data-i18n="proj1_desc">A full-stack restaurant ordering system featuring a seamless menu, secure JWT authentication, and a robust Admin Dashboard. Built with a 3-layer architecture ensuring high performance and data integrity using MySQL transactions.</p>
+                <div class="tech-stack">
+                    <span class="tech-item">React.js</span>
+                    <span class="tech-item">Node.js</span>
+                    <span class="tech-item">MySQL</span>
+                    <span class="tech-item">JWT</span>
+                </div>
+                <a href="#" class="project-link"><span data-i18n="view_project">View Project</span> &rarr;</a>
+            </div>
+        </article>
+
+        <article class="project-card">
+            <div class="project-image-wrapper slider-container" id="slider-2">
+                <div class="slider-track">
+                    <img src="images/rc1.png" alt="RC 1" class="slide active" onclick="openLightbox(this.src)">
+                    <img src="images/rc2.png" alt="RC 2" class="slide" onclick="openLightbox(this.src)">
+                    <img src="images/rc3.png" alt="RC 3" class="slide" onclick="openLightbox(this.src)">
+                    <img src="images/rc4.png" alt="RC 4" class="slide" onclick="openLightbox(this.src)">
+                    <img src="images/rc5.png" alt="RC 5" class="slide" onclick="openLightbox(this.src)">
+                </div>
+                <button class="slider-btn prev-btn" onclick="changeSlide('slider-2', -1)">❮</button>
+                <button class="slider-btn next-btn" onclick="changeSlide('slider-2', 1)">❯</button>
+            </div>
+            <div class="project-content">
+                <h3 data-i18n="proj2_title">Red Crescent Volunteer System</h3>
+                <p data-i18n="proj2_desc">A dedicated platform for managing Red Crescent volunteers. Features include automated shift scheduling, attendance tracking, and generating administrative reports. Built with a secure PHP backend.</p>
+                <div class="tech-stack">
+                    <span class="tech-item">PHP</span>
+                    <span class="tech-item">MySQL</span>
+                    <span class="tech-item">Bootstrap</span>
+                </div>
+            </div>
+        </article>
+
+        <article class="project-card">
+            <div class="project-image-wrapper slider-container" id="slider-3">
+                <div class="slider-track">
+                    <img src="images/sm1.png" alt="Store Manager Main" class="slide active" onclick="openLightbox(this.src)">
+                    <img src="images/sm2.png" alt="Inventory" class="slide" onclick="openLightbox(this.src)">
+                    <img src="images/sm3.png" alt="Sales Report" class="slide" onclick="openLightbox(this.src)">
+                    <img src="images/sm4.png" alt="Sales Report" class="slide" onclick="openLightbox(this.src)">
+                    <img src="images/sm5.png" alt="Sales Report" class="slide" onclick="openLightbox(this.src)">
+                    <img src="images/sm6.png" alt="Sales Report" class="slide" onclick="openLightbox(this.src)">
+                    <img src="images/sm7.png" alt="Sales Report" class="slide" onclick="openLightbox(this.src)">
+                </div>
+                <button class="slider-btn prev-btn" onclick="changeSlide('slider-3', -1)">❮</button>
+                <button class="slider-btn next-btn" onclick="changeSlide('slider-3', 1)">❯</button>
+            </div>
+            <div class="project-content">
+                <h3 data-i18n="proj3_title">Aljouri Store Manager</h3>
+                <p data-i18n="proj3_desc">A comprehensive desktop application designed for Aljouri Electronics Store. It manages inventory, sales, and generating invoices. Built with Python to ensure reliability and speed in offline operations.</p>
+                <div class="tech-stack">
+                    <span class="tech-item">Python</span>
+                    <span class="tech-item">Tkinter</span>
+                    <span class="tech-item">SQLite</span>
+                </div>
+            </div>
+        </article>
+
+        <article class="project-card">
+            <div class="project-image-wrapper slider-container" id="slider-4">
+                <div class="slider-track">
+                    <img src="images/jatt1.png" alt="Jatt Game 1" class="slide active" onclick="openLightbox(this.src)">
+                    <img src="images/jatt2.png" alt="Jatt Game 2" class="slide" onclick="openLightbox(this.src)">
+                    <img src="images/jatt3.png" alt="Jatt Game 3" class="slide" onclick="openLightbox(this.src)">
+                </div>
+                <button class="slider-btn prev-btn" onclick="changeSlide('slider-4', -1)">❮</button>
+                <button class="slider-btn next-btn" onclick="changeSlide('slider-4', 1)">❯</button>
+            </div>
+            <div class="project-content">
+                <h3 data-i18n="proj4_title">Jatt Game</h3>
+                <p data-i18n="proj4_desc">An interactive web-based card game featuring smooth animations and a responsive design. Players can enjoy a seamless gaming experience directly in their browser. Deployed on Render.</p>
+                <div class="tech-stack">
+                    <span class="tech-item">JavaScript</span>
+                    <span class="tech-item">HTML5</span>
+                    <span class="tech-item">CSS3</span>
+                </div>
+                <div style="display: flex; gap: 20px;">
+                    <a href="https://jatt-game.onrender.com/" target="_blank" class="project-link">
+                        <i class="fas fa-external-link-alt"></i> <span data-i18n="view_live">Live Demo</span>
+                    </a>
+                </div>
+            </div>
+        </article>
+
+    </section>
+
+    <footer id="contact">
+        <h2 data-i18n="footer_title">Have a Project Idea?</h2>
+        <p style="margin: 20px 0;" data-i18n="footer_subtitle">I am currently available for freelance work.</p>
+        
+        <div class="social-container">
+            <a href="mailto:jedoo.abdelhady@gmail.com" class="social-btn" title="Email Me">
+                <i class="fas fa-envelope"></i>
+            </a>
+            <a href="https://wa.me/966570283560" target="_blank" class="social-btn" title="WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/abdullatif-osman-4b0932347?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="social-btn" title="LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+        </div>
+
+        <br><br>
+        <p style="font-size: 0.8rem;">© 2026 JEDOO. <span data-i18n="copyright">All Rights Reserved.</span></p>
+    </footer>
+
+    <script>
+        // --- Translations ---
+        const translations = {
+            en: {
+                nav_projects: "Work", nav_about: "About", nav_contact: "Contact",
+                hero_intro: "Hello, I'm Abdullatif",
+                hero_title: "Web & Mobile App Developer, Designer & AI Specialist",
+                hero_desc_1: "I create all types of websites and applications with stunning designs and precision, tailored exactly to your needs.",
+                hero_desc_2: "Expert in PowerPoint presentations, Word documents, graduation projects, and interactive Office reports.",
+                hero_cta: "View My Work", projects_title: "Latest Projects",
+                my_certificate: "Certified Web Developer",
+                
+                proj1_title: "Better Call Zool",
+                proj1_desc: "A full-stack restaurant ordering system featuring a seamless menu, secure JWT authentication, and a robust Admin Dashboard. Built with a 3-layer architecture ensuring high performance and data integrity using MySQL transactions.",
+                
+                proj2_title: "Red Crescent Volunteer System",
+                proj2_desc: "A dedicated platform for managing Red Crescent volunteers. Features include automated shift scheduling, attendance tracking, and generating administrative reports. Built with a secure PHP backend.",
+                
+                proj3_title: "Aljouri Store Manager",
+                proj3_desc: "A comprehensive desktop application designed for Aljouri Electronics Store. It manages inventory, sales, and generating invoices. Built with Python to ensure reliability and speed in offline operations.",
+                
+                proj4_title: "Jatt Game",
+                proj4_desc: "An interactive web-based card game featuring smooth animations and a responsive design. Players can enjoy a seamless gaming experience directly in their browser. Deployed on Render.",
+
+                view_project: "View Project", view_live: "Live Demo", source_code: "Source Code",
+                footer_title: "Have a Project Idea?", footer_subtitle: "I am currently available for freelance work.",
+                copyright: "All Rights Reserved."
+            },
+            ar: {
+                nav_projects: "أعمالي", nav_about: "عني", nav_contact: "تواصل",
+                hero_intro: "أهلاً، أنا عبداللطيف",
+                hero_title: "مطور تطبيقات ومواقع، مصمم، وخبير ذكاء اصطناعي",
+                hero_desc_1: "أقوم بإنشاء كافة أنواع المواقع والتطبيقات بتصاميم رائعة ودقة عالية، تماماً كما يريدها العميل.",
+                hero_desc_2: "متخصص أيضاً في عروض الباوربوينت، الوورد، مشاريع التخرج، وإنشاء التقارير التفاعلية باستخدام تطبيقات الأوفيس.",
+                hero_cta: "تصفح مشاريعي", projects_title: "أحدث المشاريع",
+                my_certificate: "مطور ويب معتمد",
+                
+                proj1_title: "Better Call Zool",
+                proj1_desc: "نظام متكامل لطلب الطعام للمطاعم. يتميز بتصفح سلس للقائمة، مصادقة آمنة للمستخدمين، ولوحة تحكم شاملة للإدارة. تم تصميمه ببنية برمجية ثلاثية الطبقات (3-Layer Architecture) لضمان الأداء العالي.",
+
+                proj2_title: "نظام متطوعي الهلال الأحمر",
+                proj2_desc: "منصة مخصصة لإدارة متطوعي الهلال الأحمر. تشمل جدولة المناوبات تلقائياً، تتبع الحضور، وإنشاء التقارير الإدارية. مبني بنظام خلفي PHP آمن.",
+
+                proj3_title: "نظام إدارة متجر الجوري",
+                proj3_desc: "تطبيق سطح مكتب متكامل مصمم لمتجر الجوري للإلكترونيات. يقوم بإدارة المخزون، المبيعات، وإصدار الفواتير. تم بناؤه باستخدام بايثون لضمان الموثوقية والسرعة في العمليات.",
+
+                proj4_title: "لعبة جات (Jatt Game)",
+                proj4_desc: "لعبة بطاقات تفاعلية على الويب تتميز برسوم متحركة سلسة وتصميم متجاوب. يمكن للاعبين الاستمتاع بتجربة لعب سلسة مباشرة في المتصفح.",
+
+                view_project: "معاينة المشروع", view_live: "تجربة اللعبة", source_code: "الكود المصدري",
+                footer_title: "هل لديك فكرة مشروع؟", footer_subtitle: "أنا متاح حالياً للعمل الحر والمشاريع الجديدة.",
+                copyright: "جميع الحقوق محفوظة."
+            }
+        };
+
+        // --- Logic ---
+        const themeBtn = document.getElementById('theme-btn');
+        const langBtn = document.getElementById('lang-btn');
+        const htmlElement = document.documentElement;
+
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        htmlElement.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+
+        themeBtn.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            htmlElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+
+        function updateThemeIcon(theme) { themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙'; }
+
+        let currentLang = 'en';
+        langBtn.addEventListener('click', () => {
+            currentLang = currentLang === 'en' ? 'ar' : 'en';
+            updateLanguage(currentLang);
+        });
+
+        function updateLanguage(lang) {
+            langBtn.textContent = lang === 'en' ? 'AR' : 'EN';
+            htmlElement.lang = lang; htmlElement.dir = lang === 'en' ? 'ltr' : 'rtl';
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if(translations[lang][key]) el.textContent = translations[lang][key];
+            });
+        }
+
+        // --- Slider Logic ---
+        function changeSlide(sliderId, direction) {
+            const container = document.getElementById(sliderId);
+            const slides = container.querySelectorAll('.slide');
+            let currentIndex = -1;
+            slides.forEach((slide, index) => {
+                if(slide.classList.contains('active')) {
+                    currentIndex = index;
+                    slide.classList.remove('active');
+                }
+            });
+            let newIndex = currentIndex + direction;
+            if (newIndex >= slides.length) newIndex = 0;
+            if (newIndex < 0) newIndex = slides.length - 1;
+            slides[newIndex].classList.add('active');
+        }
+
+        // --- Lightbox Logic ---
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+
+        function openLightbox(src) {
+            lightboxImg.src = src;
+            lightbox.classList.add('open');
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('open');
+        }
+
+        // Scroll Reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.project-card').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
