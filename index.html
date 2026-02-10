@@ -179,6 +179,7 @@
         .slider-btn:hover { background: var(--accent-color); }
         .prev-btn { left: 15px; } .next-btn { right: 15px; }
 
+        /* --- NEW LIGHTBOX STYLES (With Navigation) --- */
         .lightbox {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.95); z-index: 2000;
@@ -187,13 +188,25 @@
         }
         .lightbox.open { display: flex; opacity: 1; }
         .lightbox-img {
-            max-width: 90%; max-height: 90%; border-radius: 8px;
+            max-width: 85%; max-height: 85%; border-radius: 8px;
             box-shadow: 0 0 50px rgba(56, 189, 248, 0.2); object-fit: contain;
         }
         .close-lightbox {
-            position: absolute; top: 30px; right: 30px;
-            color: white; font-size: 3rem; cursor: pointer; z-index: 2001;
+            position: absolute; top: 20px; right: 30px;
+            color: white; font-size: 3rem; cursor: pointer; z-index: 2002;
         }
+        /* Navigation Buttons inside Lightbox */
+        .lightbox-nav {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1); color: white;
+            border: none; padding: 15px; font-size: 2rem;
+            cursor: pointer; z-index: 2002; transition: 0.3s;
+            border-radius: 50%; width: 60px; height: 60px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .lightbox-nav:hover { background: rgba(255, 255, 255, 0.3); }
+        .lightbox-nav.prev { left: 20px; }
+        .lightbox-nav.next { right: 20px; }
 
         /* --- Content Styles --- */
         .project-content h3 { font-size: 2rem; margin-bottom: 15px; color: var(--accent-color); }
@@ -245,9 +258,12 @@
 </head>
 <body>
 
-    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
-        <span class="close-lightbox">&times;</span>
+    <div id="lightbox" class="lightbox">
+        <span class="close-lightbox" onclick="closeLightbox()">&times;</span>
+        
+        <button class="lightbox-nav prev" id="lb-prev" onclick="navigateLightbox(-1)">&#10094;</button>
         <img id="lightbox-img" class="lightbox-img" src="" alt="Full Screen">
+        <button class="lightbox-nav next" id="lb-next" onclick="navigateLightbox(1)">&#10095;</button>
     </div>
 
     <header>
@@ -307,11 +323,11 @@
         <article class="project-card">
             <div class="project-image-wrapper slider-container" id="slider-1">
                 <div class="slider-track">
-                    <img src="images/bcz1.png" alt="Zool Main" class="slide active" onclick="openLightbox(this.src)">
-                    <img src="images/bcz2.png" alt="Zool Menu" class="slide" onclick="openLightbox(this.src)">
-                    <img src="images/bcz3.png" alt="Zool Admin" class="slide" onclick="openLightbox(this.src)">
-                    <img src="images/bcz4.png" alt="Zool Admin" class="slide" onclick="openLightbox(this.src)">
-                    <img src="images/bcz5.png" alt="Zool Admin" class="slide" onclick="openLightbox(this.src)">
+                    <img src="images/bcz1.png" alt="Zool Main" class="slide active" onclick="openLightbox(this)">
+                    <img src="images/bcz2.png" alt="Zool Menu" class="slide" onclick="openLightbox(this)">
+                    <img src="images/bcz3.png" alt="Zool Admin" class="slide" onclick="openLightbox(this)">
+                    <img src="images/bcz4.png" alt="Zool Admin" class="slide" onclick="openLightbox(this)">
+                    <img src="images/bcz5.png" alt="Zool Admin" class="slide" onclick="openLightbox(this)">
                 </div>
                 <button class="slider-btn prev-btn" onclick="changeSlide('slider-1', -1)">❮</button>
                 <button class="slider-btn next-btn" onclick="changeSlide('slider-1', 1)">❯</button>
@@ -332,11 +348,11 @@
         <article class="project-card">
             <div class="project-image-wrapper slider-container" id="slider-2">
                 <div class="slider-track">
-                    <img src="images/rc1.png" alt="RC 1" class="slide active" onclick="openLightbox(this.src)">
-                    <img src="images/rc2.png" alt="RC 2" class="slide" onclick="openLightbox(this.src)">
-                    <img src="images/rc3.png" alt="RC 3" class="slide" onclick="openLightbox(this.src)">
-                    <img src="images/rc4.png" alt="RC 4" class="slide" onclick="openLightbox(this.src)">
-                    <img src="images/rc5.png" alt="RC 5" class="slide" onclick="openLightbox(this.src)">
+                    <img src="images/rc1.png" alt="RC 1" class="slide active" onclick="openLightbox(this)">
+                    <img src="images/rc2.png" alt="RC 2" class="slide" onclick="openLightbox(this)">
+                    <img src="images/rc3.png" alt="RC 3" class="slide" onclick="openLightbox(this)">
+                    <img src="images/rc4.png" alt="RC 4" class="slide" onclick="openLightbox(this)">
+                    <img src="images/rc5.png" alt="RC 5" class="slide" onclick="openLightbox(this)">
                 </div>
                 <button class="slider-btn prev-btn" onclick="changeSlide('slider-2', -1)">❮</button>
                 <button class="slider-btn next-btn" onclick="changeSlide('slider-2', 1)">❯</button>
@@ -355,13 +371,13 @@
         <article class="project-card">
             <div class="project-image-wrapper slider-container" id="slider-3">
                 <div class="slider-track">
-                    <img src="images/sm1.png" alt="Store Manager Main" class="slide active" onclick="openLightbox(this.src)">
-                    <img src="images/sm2.png" alt="Inventory" class="slide" onclick="openLightbox(this.src)">
-                    <img src="images/sm3.png" alt="Sales Report" class="slide" onclick="openLightbox(this.src)">
-                    <img src="images/sm4.png" alt="Sales Report" class="slide" onclick="openLightbox(this.src)">
-                    <img src="images/sm5.png" alt="Sales Report" class="slide" onclick="openLightbox(this.src)">
-                    <img src="images/sm6.png" alt="Sales Report" class="slide" onclick="openLightbox(this.src)">
-                    <img src="images/sm7.png" alt="Sales Report" class="slide" onclick="openLightbox(this.src)">
+                    <img src="images/sm1.png" alt="Store Manager Main" class="slide active" onclick="openLightbox(this)">
+                    <img src="images/sm2.png" alt="Inventory" class="slide" onclick="openLightbox(this)">
+                    <img src="images/sm3.png" alt="Sales Report" class="slide" onclick="openLightbox(this)">
+                    <img src="images/sm4.png" alt="Sales Report" class="slide" onclick="openLightbox(this)">
+                    <img src="images/sm5.png" alt="Sales Report" class="slide" onclick="openLightbox(this)">
+                    <img src="images/sm6.png" alt="Sales Report" class="slide" onclick="openLightbox(this)">
+                    <img src="images/sm7.png" alt="Sales Report" class="slide" onclick="openLightbox(this)">
                 </div>
                 <button class="slider-btn prev-btn" onclick="changeSlide('slider-3', -1)">❮</button>
                 <button class="slider-btn next-btn" onclick="changeSlide('slider-3', 1)">❯</button>
@@ -380,9 +396,9 @@
         <article class="project-card">
             <div class="project-image-wrapper slider-container" id="slider-4">
                 <div class="slider-track">
-                    <img src="images/jatt1.png" alt="Jatt Game 1" class="slide active" onclick="openLightbox(this.src)">
-                    <img src="images/jatt2.png" alt="Jatt Game 2" class="slide" onclick="openLightbox(this.src)">
-                    <img src="images/jatt3.png" alt="Jatt Game 3" class="slide" onclick="openLightbox(this.src)">
+                    <img src="images/jatt1.png" alt="Jatt Game 1" class="slide active" onclick="openLightbox(this)">
+                    <img src="images/jatt2.png" alt="Jatt Game 2" class="slide" onclick="openLightbox(this)">
+                    <img src="images/jatt3.png" alt="Jatt Game 3" class="slide" onclick="openLightbox(this)">
                 </div>
                 <button class="slider-btn prev-btn" onclick="changeSlide('slider-4', -1)">❮</button>
                 <button class="slider-btn next-btn" onclick="changeSlide('slider-4', 1)">❯</button>
@@ -531,13 +547,58 @@
             slides[newIndex].classList.add('active');
         }
 
-        // --- Lightbox Logic ---
+        // --- Lightbox Logic (Enhanced) ---
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
+        const lbNext = document.getElementById('lb-next');
+        const lbPrev = document.getElementById('lb-prev');
+        
+        let currentLightboxImages = []; // Stores sources for the current open slider
+        let currentLightboxIndex = 0;
 
-        function openLightbox(src) {
-            lightboxImg.src = src;
+        function openLightbox(input) {
+            // Check if input is string (e.g. certificate) or element (img)
+            if (typeof input === 'string') {
+                // Standalone image (Certificate)
+                currentLightboxImages = [input];
+                currentLightboxIndex = 0;
+                lbNext.style.display = 'none'; // Hide buttons
+                lbPrev.style.display = 'none';
+            } else {
+                // Slider Image
+                // Find parent container to get all siblings
+                const parent = input.closest('.slider-track');
+                const images = parent.querySelectorAll('img');
+                
+                // Build array of sources
+                currentLightboxImages = Array.from(images).map(img => img.src);
+                
+                // Find index of clicked image
+                currentLightboxIndex = currentLightboxImages.indexOf(input.src);
+                
+                lbNext.style.display = 'flex'; // Show buttons
+                lbPrev.style.display = 'flex';
+            }
+
+            updateLightboxImage();
             lightbox.classList.add('open');
+        }
+
+        function navigateLightbox(direction) {
+            currentLightboxIndex += direction;
+            
+            // Loop navigation
+            if (currentLightboxIndex >= currentLightboxImages.length) {
+                currentLightboxIndex = 0;
+            } else if (currentLightboxIndex < 0) {
+                currentLightboxIndex = currentLightboxImages.length - 1;
+            }
+            
+            updateLightboxImage();
+        }
+
+        function updateLightboxImage() {
+            lightboxImg.src = currentLightboxImages[currentLightboxIndex];
         }
 
         function closeLightbox() {
