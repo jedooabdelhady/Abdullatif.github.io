@@ -14,18 +14,18 @@
     <style>
         /* --- 1. CSS Variables & Reset --- */
         :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
+            --bg-color: #0f172a; /* Dark Slate */
+            --card-bg: rgba(30, 41, 59, 0.7); /* Transparent Card for effect */
             --text-primary: #f8fafc;
             --text-secondary: #94a3b8;
             --accent-color: #38bdf8;
-            --border-color: #334155;
+            --border-color: rgba(51, 65, 85, 0.5);
             --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         [data-theme="light"] {
             --bg-color: #ffffff;
-            --card-bg: #f3f4f6;
+            --card-bg: rgba(243, 244, 246, 0.8);
             --text-primary: #1e293b;
             --text-secondary: #64748b;
             --accent-color: #0284c7;
@@ -39,10 +39,48 @@
             font-family: 'Tajawal', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-primary);
-            transition: var(--transition);
+            transition: color 0.4s ease;
             line-height: 1.6;
             overflow-x: hidden;
+            position: relative;
         }
+
+        /* --- NEW: COLORFUL JELLY MOUSE FOLLOWER --- */
+        #blob-follower {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 400px; /* الحجم المتوسط المطلوب */
+            height: 400px;
+            background: linear-gradient(to right, #7b2cbf, #3a86ff, #ff006e); /* ألوان الهلام */
+            border-radius: 50%;
+            filter: blur(80px); /* التنعيم القوي */
+            opacity: 0.6;
+            z-index: -1;
+            pointer-events: none;
+            transform: translate(-50%, -50%); /* Center on cursor */
+            animation: rotateBlob 10s infinite linear; /* دوران مستمر */
+            transition: opacity 0.5s ease; /* For hiding when mouse leaves */
+        }
+
+        /* تأثير الدوران ليعطي شكل الهلام المتحرك */
+        @keyframes rotateBlob {
+            0% { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+            50% { transform: translate(-50%, -50%) rotate(180deg) scale(1.1); } /* يتمدد قليلاً */
+            100% { transform: translate(-50%, -50%) rotate(360deg) scale(1); }
+        }
+
+        /* Hide blob on light mode if preferred, or adjust colors */
+        [data-theme="light"] #blob-follower {
+            opacity: 0.4;
+            background: linear-gradient(to right, #a0c4ff, #bdb2ff, #ffc6ff);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--bg-color); }
+        ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-color); }
 
         a { text-decoration: none; color: inherit; transition: var(--transition); }
         ul { list-style: none; }
@@ -51,10 +89,11 @@
         header {
             position: fixed; top: 0; width: 100%; padding: 20px 5%;
             display: flex; justify-content: space-between; align-items: center;
-            background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(12px);
+            background: rgba(15, 23, 42, 0.7); /* More transparent to see blob */
+            backdrop-filter: blur(15px);
             z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.05);
         }
-        [data-theme="light"] header { background: rgba(255, 255, 255, 0.85); border-bottom: 1px solid rgba(0,0,0,0.05); }
+        [data-theme="light"] header { background: rgba(255, 255, 255, 0.7); border-bottom: 1px solid rgba(0,0,0,0.05); }
 
         .logo { font-size: 1.5rem; font-weight: 900; color: var(--accent-color); letter-spacing: 1px; }
         .nav-actions { display: flex; align-items: center; gap: 20px; }
@@ -78,9 +117,9 @@
 
         /* --- 3. Hero Section --- */
         .hero {
-            min-height: 100vh; display: flex; flex-direction: column;
+            min-height: 90vh; display: flex; flex-direction: column;
             justify-content: center; align-items: center; text-align: center;
-            padding: 120px 20px 100px; position: relative;
+            padding: 120px 20px 50px; position: relative;
         }
         .profile-photo {
             width: 180px; height: 180px; border-radius: 50%; object-fit: cover;
@@ -89,27 +128,32 @@
         }
         .profile-photo:hover { transform: scale(1.05); box-shadow: 0 0 50px rgba(56, 189, 248, 0.5); }
         .hero-intro { color: var(--accent-color); font-weight: bold; letter-spacing: 2px; margin-bottom: 15px; text-transform: uppercase; }
+        
         .hero h1 {
             font-size: clamp(2rem, 5vw, 4rem); font-weight: 900; margin-bottom: 25px;
             background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent-color));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             line-height: 1.3; max-width: 900px;
         }
-        .hero p { font-size: 1.15rem; color: var(--text-secondary); max-width: 700px; margin-bottom: 40px; }
-        .btn {
-            padding: 15px 40px; background-color: var(--accent-color); color: #fff;
-            border-radius: 50px; font-weight: 700; font-size: 1.1rem;
-            box-shadow: 0 10px 30px -10px var(--accent-color); display: inline-block;
+        
+        .typewriter {
+            color: var(--accent-color);
+            border-right: 3px solid var(--accent-color);
+            padding-right: 5px;
+            animation: blink 0.7s infinite;
         }
-        .btn:hover { transform: translateY(-5px); box-shadow: 0 20px 40px -10px var(--accent-color); }
+        @keyframes blink { 0%, 100% { border-color: transparent; } 50% { border-color: var(--accent-color); } }
 
-        /* --- CERTIFICATE BUTTON --- */
+        .hero p { font-size: 1.15rem; color: var(--text-secondary); max-width: 700px; margin-bottom: 40px; }
+        
+        /* Certificate Button */
         .cert-btn {
             display: inline-flex; align-items: center; gap: 8px;
             margin-bottom: 40px; padding: 8px 20px;
             border: 1px solid var(--border-color); border-radius: 30px;
             background: rgba(255, 255, 255, 0.05); color: var(--text-secondary);
             font-size: 0.9rem; transition: var(--transition);
+            backdrop-filter: blur(5px); /* Nice glass effect over the blob */
         }
         .cert-btn:hover {
             border-color: var(--accent-color); color: var(--accent-color);
@@ -117,10 +161,10 @@
         }
         .cert-btn i { color: var(--accent-color); }
 
-        /* --- TECH STACK MARQUEE --- */
+        /* Tech Marquee */
         .tech-marquee {
             width: 100%; max-width: 800px; overflow: hidden;
-            margin-bottom: 40px; position: relative;
+            margin-bottom: 20px; position: relative;
             mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
             -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
         }
@@ -139,13 +183,21 @@
         @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         /* --- 4. Projects Section --- */
-        .projects-container { padding: 100px 5%; }
+        .projects-container { 
+            padding: 50px 5% 20px 5%;
+        }
         .section-title { font-size: 2.5rem; font-weight: 900; margin-bottom: 80px; text-align: center; }
 
         .project-card {
             display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
-            align-items: center; margin-bottom: 150px; opacity: 0;
+            align-items: center; margin-bottom: 100px; opacity: 0;
             transform: translateY(50px); transition: all 0.8s ease-out;
+            /* Glassmorphism for cards to let blob shine through */
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(5px);
         }
         .project-card.visible { opacity: 1; transform: translateY(0); }
 
@@ -160,7 +212,7 @@
             height: 400px;
         }
 
-        /* --- SLIDER & LIGHTBOX --- */
+        /* Slider & Lightbox */
         .slider-container { position: relative; width: 100%; height: 100%; }
         .slider-track { width: 100%; height: 100%; position: relative; }
         .slide {
@@ -179,7 +231,7 @@
         .slider-btn:hover { background: var(--accent-color); }
         .prev-btn { left: 15px; } .next-btn { right: 15px; }
 
-        /* --- NEW LIGHTBOX STYLES (With Navigation) --- */
+        /* Lightbox with Navigation */
         .lightbox {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.95); z-index: 2000;
@@ -195,7 +247,6 @@
             position: absolute; top: 20px; right: 30px;
             color: white; font-size: 3rem; cursor: pointer; z-index: 2002;
         }
-        /* Navigation Buttons inside Lightbox */
         .lightbox-nav {
             position: absolute; top: 50%; transform: translateY(-50%);
             background: rgba(255, 255, 255, 0.1); color: white;
@@ -208,7 +259,7 @@
         .lightbox-nav.prev { left: 20px; }
         .lightbox-nav.next { right: 20px; }
 
-        /* --- Content Styles --- */
+        /* Content Styles */
         .project-content h3 { font-size: 2rem; margin-bottom: 15px; color: var(--accent-color); }
         .project-content p { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 30px; line-height: 1.8; }
         .tech-stack { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
@@ -224,13 +275,15 @@
         }
         html[dir="rtl"] .project-link i { transform: scaleX(-1); }
 
-        /* --- FOOTER & CONTACT --- */
+        /* --- 5. Footer & Contact --- */
         footer {
-            padding: 60px 20px; text-align: center; border-top: 1px solid var(--border-color);
-            margin-top: 50px; color: var(--text-secondary);
+            padding: 40px 20px;
+            text-align: center; border-top: 1px solid var(--border-color);
+            margin-top: 20px;
+            color: var(--text-secondary);
         }
         .social-container {
-            display: flex; justify-content: center; gap: 20px; margin-top: 30px;
+            display: flex; justify-content: center; gap: 20px; margin-top: 20px;
         }
         .social-btn {
             width: 55px; height: 55px; border-radius: 50%;
@@ -247,7 +300,10 @@
 
         @media (max-width: 900px) {
             .header { padding: 15px 20px; } .nav-links { display: none; }
-            .project-card { grid-template-columns: 1fr; gap: 30px; margin-bottom: 100px; }
+            .project-card { 
+                grid-template-columns: 1fr; gap: 30px; margin-bottom: 100px;
+                background: none; border: none; padding: 0; backdrop-filter: none; /* Simplify on mobile */
+            }
             .project-card:nth-child(even) .project-content,
             .project-card:nth-child(even) .project-image-wrapper,
             .project-card:nth-child(odd) .project-content,
@@ -258,9 +314,10 @@
 </head>
 <body>
 
+    <div id="blob-follower"></div>
+
     <div id="lightbox" class="lightbox">
         <span class="close-lightbox" onclick="closeLightbox()">&times;</span>
-        
         <button class="lightbox-nav prev" id="lb-prev" onclick="navigateLightbox(-1)">&#10094;</button>
         <img id="lightbox-img" class="lightbox-img" src="" alt="Full Screen">
         <button class="lightbox-nav next" id="lb-next" onclick="navigateLightbox(1)">&#10095;</button>
@@ -282,7 +339,10 @@
     <section class="hero" id="about">
         <img src="images/me.jpeg" alt="Abdullatif Abdelhady" class="profile-photo">
         <p class="hero-intro" data-i18n="hero_intro">Hello, I'm Abdullatif</p>
-        <h1 data-i18n="hero_title">Web & Mobile App Developer, Designer & AI Specialist</h1>
+        
+        <h1>
+            <span class="typewriter" id="typewriter-text"></span>
+        </h1>
         
         <a href="images/certificate.jpeg" target="_blank" class="cert-btn" onclick="event.preventDefault(); openLightbox(this.href);">
             <i class="fas fa-certificate"></i> <span data-i18n="my_certificate">Certified Web Developer</span>
@@ -299,7 +359,6 @@
                 <div class="tech-icon"><i class="fab fa-html5"></i> HTML5</div>
                 <div class="tech-icon"><i class="fab fa-css3-alt"></i> CSS3</div>
                 <div class="tech-icon"><i class="fas fa-brain"></i> AI Models</div>
-                
                 <div class="tech-icon"><i class="fab fa-react"></i> React</div>
                 <div class="tech-icon"><i class="fab fa-node-js"></i> Node.js</div>
                 <div class="tech-icon"><i class="fab fa-python"></i> Python</div>
@@ -314,7 +373,6 @@
 
         <p data-i18n="hero_desc_1">I create all types of websites and applications with stunning designs and precision, tailored exactly to your needs.</p>
         <p data-i18n="hero_desc_2" style="font-size: 1rem; opacity: 0.8; margin-top: -20px;">Expert in PowerPoint presentations, Word documents, graduation projects, and interactive Office reports.</p>
-        <a href="#projects" class="btn" data-i18n="hero_cta">View My Work</a>
     </section>
 
     <section id="projects" class="projects-container">
@@ -442,15 +500,27 @@
     </footer>
 
     <script>
+        // --- JELLY BLOB FOLLOWER SCRIPT ---
+        const blob = document.getElementById("blob-follower");
+
+        document.body.onpointermove = event => {
+            const { clientX, clientY } = event;
+            
+            // Simple animation using Web Animations API for smooth lag
+            blob.animate({
+                left: `${clientX}px`,
+                top: `${clientY}px`
+            }, { duration: 3000, fill: "forwards" }); // 3000ms duration creates the "lag" feel
+        }
+
         // --- Translations ---
         const translations = {
             en: {
                 nav_projects: "Work", nav_about: "About", nav_contact: "Contact",
                 hero_intro: "Hello, I'm Abdullatif",
-                hero_title: "Web & Mobile App Developer, Designer & AI Specialist",
                 hero_desc_1: "I create all types of websites and applications with stunning designs and precision, tailored exactly to your needs.",
                 hero_desc_2: "Expert in PowerPoint presentations, Word documents, graduation projects, and interactive Office reports.",
-                hero_cta: "View My Work", projects_title: "Latest Projects",
+                projects_title: "Latest Projects",
                 my_certificate: "Certified Web Developer",
                 
                 proj1_title: "Better Call Zool",
@@ -465,17 +535,16 @@
                 proj4_title: "Jatt Game",
                 proj4_desc: "An interactive web-based card game featuring smooth animations and a responsive design. Players can enjoy a seamless gaming experience directly in their browser. Deployed on Render.",
 
-                view_project: "View Project", view_live: "Live Demo", source_code: "Source Code",
+                view_project: "View Project", view_live: "Live Demo",
                 footer_title: "Have a Project Idea?", footer_subtitle: "I am currently available for freelance work.",
                 copyright: "All Rights Reserved."
             },
             ar: {
                 nav_projects: "أعمالي", nav_about: "عني", nav_contact: "تواصل",
                 hero_intro: "أهلاً، أنا عبداللطيف",
-                hero_title: "مطور تطبيقات ومواقع، مصمم، وخبير ذكاء اصطناعي",
                 hero_desc_1: "أقوم بإنشاء كافة أنواع المواقع والتطبيقات بتصاميم رائعة ودقة عالية، تماماً كما يريدها العميل.",
                 hero_desc_2: "متخصص أيضاً في عروض الباوربوينت، الوورد، مشاريع التخرج، وإنشاء التقارير التفاعلية باستخدام تطبيقات الأوفيس.",
-                hero_cta: "تصفح مشاريعي", projects_title: "أحدث المشاريع",
+                projects_title: "أحدث المشاريع",
                 my_certificate: "مطور ويب معتمد",
                 
                 proj1_title: "Better Call Zool",
@@ -490,45 +559,71 @@
                 proj4_title: "لعبة جات (Jatt Game)",
                 proj4_desc: "لعبة بطاقات تفاعلية على الويب تتميز برسوم متحركة سلسة وتصميم متجاوب. يمكن للاعبين الاستمتاع بتجربة لعب سلسة مباشرة في المتصفح.",
 
-                view_project: "معاينة المشروع", view_live: "تجربة اللعبة", source_code: "الكود المصدري",
+                view_project: "معاينة المشروع", view_live: "تجربة اللعبة",
                 footer_title: "هل لديك فكرة مشروع؟", footer_subtitle: "أنا متاح حالياً للعمل الحر والمشاريع الجديدة.",
                 copyright: "جميع الحقوق محفوظة."
             }
         };
 
-        // --- Logic ---
+        // --- Theme Logic ---
         const themeBtn = document.getElementById('theme-btn');
-        const langBtn = document.getElementById('lang-btn');
         const htmlElement = document.documentElement;
-
         const savedTheme = localStorage.getItem('theme') || 'dark';
         htmlElement.setAttribute('data-theme', savedTheme);
-        updateThemeIcon(savedTheme);
+        themeBtn.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
 
         themeBtn.addEventListener('click', () => {
             const currentTheme = htmlElement.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             htmlElement.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
-            updateThemeIcon(newTheme);
+            themeBtn.textContent = newTheme === 'dark' ? '☀️' : '🌙';
         });
 
-        function updateThemeIcon(theme) { themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙'; }
-
+        // --- Language & Typewriter Logic ---
+        const langBtn = document.getElementById('lang-btn');
         let currentLang = 'en';
+        
+        const wordsEn = ["Full Stack Web Developer", "UI/UX Designer", "AI Specialist"];
+        const wordsAr = ["مطور مواقع وتطبيقات", "مصمم واجهات", "خبير ذكاء اصطناعي"];
+        let currentWords = wordsEn;
+        let wordIndex = 0;
+        let isDeleting = false;
+        let txt = '';
+        let typeSpeed = 100;
+
+        function typeWriter() {
+            const currentWord = currentWords[wordIndex];
+            if (isDeleting) {
+                txt = currentWord.substring(0, txt.length - 1);
+                typeSpeed = 50;
+            } else {
+                txt = currentWord.substring(0, txt.length + 1);
+                typeSpeed = 100;
+            }
+            document.getElementById('typewriter-text').textContent = txt;
+            if (!isDeleting && txt === currentWord) {
+                typeSpeed = 2000; isDeleting = true;
+            } else if (isDeleting && txt === '') {
+                isDeleting = false; wordIndex = (wordIndex + 1) % currentWords.length; typeSpeed = 200;
+            }
+            setTimeout(typeWriter, typeSpeed);
+        }
+        typeWriter();
+
         langBtn.addEventListener('click', () => {
             currentLang = currentLang === 'en' ? 'ar' : 'en';
-            updateLanguage(currentLang);
-        });
+            langBtn.textContent = currentLang === 'en' ? 'AR' : 'EN';
+            htmlElement.lang = currentLang; htmlElement.dir = currentLang === 'en' ? 'ltr' : 'rtl';
+            
+            currentWords = currentLang === 'en' ? wordsEn : wordsAr;
+            wordIndex = 0; txt = ''; isDeleting = false;
 
-        function updateLanguage(lang) {
-            langBtn.textContent = lang === 'en' ? 'AR' : 'EN';
-            htmlElement.lang = lang; htmlElement.dir = lang === 'en' ? 'ltr' : 'rtl';
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
-                if(translations[lang][key]) el.textContent = translations[lang][key];
+                if(translations[currentLang][key]) el.textContent = translations[currentLang][key];
             });
-        }
+        });
 
         // --- Slider Logic ---
         function changeSlide(sliderId, direction) {
@@ -547,53 +642,37 @@
             slides[newIndex].classList.add('active');
         }
 
-        // --- Lightbox Logic (Enhanced) ---
+        // --- Lightbox Logic (With Navigation) ---
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
         const lbNext = document.getElementById('lb-next');
         const lbPrev = document.getElementById('lb-prev');
         
-        let currentLightboxImages = []; // Stores sources for the current open slider
+        let currentLightboxImages = []; 
         let currentLightboxIndex = 0;
 
         function openLightbox(input) {
-            // Check if input is string (e.g. certificate) or element (img)
             if (typeof input === 'string') {
-                // Standalone image (Certificate)
                 currentLightboxImages = [input];
                 currentLightboxIndex = 0;
-                lbNext.style.display = 'none'; // Hide buttons
+                lbNext.style.display = 'none';
                 lbPrev.style.display = 'none';
             } else {
-                // Slider Image
-                // Find parent container to get all siblings
                 const parent = input.closest('.slider-track');
                 const images = parent.querySelectorAll('img');
-                
-                // Build array of sources
                 currentLightboxImages = Array.from(images).map(img => img.src);
-                
-                // Find index of clicked image
                 currentLightboxIndex = currentLightboxImages.indexOf(input.src);
-                
-                lbNext.style.display = 'flex'; // Show buttons
+                lbNext.style.display = 'flex';
                 lbPrev.style.display = 'flex';
             }
-
             updateLightboxImage();
             lightbox.classList.add('open');
         }
 
         function navigateLightbox(direction) {
             currentLightboxIndex += direction;
-            
-            // Loop navigation
-            if (currentLightboxIndex >= currentLightboxImages.length) {
-                currentLightboxIndex = 0;
-            } else if (currentLightboxIndex < 0) {
-                currentLightboxIndex = currentLightboxImages.length - 1;
-            }
-            
+            if (currentLightboxIndex >= currentLightboxImages.length) currentLightboxIndex = 0;
+            else if (currentLightboxIndex < 0) currentLightboxIndex = currentLightboxImages.length - 1;
             updateLightboxImage();
         }
 
